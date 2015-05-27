@@ -2,6 +2,8 @@ Copyright laws are are changing all over the world. Be sure to check the are
 copyright laws for your country before downloading or redistributing
 this or any other Project Gutenberg eBook hi hello.
 
-This header should be the first thing seen when viewing this Project
+i This header should be the first thing seen when viewing this Project
 Gutenberg file.  Please do not remove it.  Do not change or edit the
-header without written permission.
+header without written permission. good.
+
+spell really
