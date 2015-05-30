@@ -1,9 +1,8 @@
-#!/usr/bin/env ruby
 require "pry"
 
 def create_dictionary
   dictionary = Hash.new(0)
-  file = File.readlines('words.txt')
+  file = File.readlines('lotsowords.txt')
   file.each do |line|
     word_split = line.downcase.split(/[^\b(\w+)\b]/)
     word_split.each do |word|
@@ -13,9 +12,7 @@ def create_dictionary
   dictionary
 end
 
-def sorted
-  Hash[create_dictionary.sort_by {|word, count| count}.reverse]
-end
+@sorted = Hash[create_dictionary.sort_by {|word, count| count}.reverse]
 
 def check_words(input)
   words = input.downcase.split(/[^\b(\w+)\b]/)
@@ -27,13 +24,17 @@ def check_words(input)
 end
 
 def dictionary_check(temp_word)
-  sorted[temp_word]
+ @sorted[temp_word]
 end
 
 def check_many(word)
-  ck1 = check_frequency(check_deleted_letters(word))
-  ck2 = check_frequency(check_letter_missing(word))
-  ck3 = check_frequency(check_swapped_letter(word))
+  if word.length == 1
+    return word
+  else
+    ck1 = check_frequency(check_deleted_letters(word))
+    ck2 = check_frequency(check_letter_missing(word))
+    ck3 = check_frequency(check_swapped_letter(word))
+  end
 
   trueword = [ck1, ck2, ck3]
 
@@ -43,20 +44,20 @@ end
 
 
 def check_frequency(word)
-  if sorted[word] == nil
+  if  @sorted[word] == nil
     { word => 0 }
   else
-    { word => sorted[word]}
+    { word =>  @sorted[word]}
   end
 end
 
 def check_letter_missing(word)
   characters = word.split('')
   characters.each_with_index do |chr, index|
-    characters.insert(index, ".")
+    characters.insert(index, '.')
     temp_word = /(#{characters.join})/
-      sorted.each do |sorted_word, count|
-        if temp_word.match(sorted_word)
+       @sorted.each do |sorted_word, count|
+        if sorted_word =~ /^#{temp_word}$/
           return sorted_word
         end
       end
@@ -103,8 +104,6 @@ def correct(sentence)
   # YOUR CODE HERE
 end
 
-# input = ARGV.join(" ")
-input = "i spel reallly good"
-create_dictionary
+input = ARGV.join(" ")
 result = check_words(input)
 puts result
